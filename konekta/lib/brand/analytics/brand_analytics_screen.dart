@@ -4,12 +4,13 @@ import '../../core/app_scope.dart';
 import '../../core/theme.dart';
 import '../../notification/notifications_screen.dart';
 
-const Color kKonektaBlue = Color(0xFF4A90E2);
-const Color kKonektaPurple = Color(0xFF9B51E0);
-const Color kTextDark = Color(0xFF333333);
-const Color kTextSubtle = Colors.black;
-const Color kPositiveGreen = Color(0xFF27AE60);
-const Color kNegativeRed = Color(0xFFEB5757);
+const Color _kBlue = Color(0xFF1E70E7);
+const Color _kTextDark = Color(0xFF2C254A);
+const Color _kTextSubtle = Color(0xFF757D95);
+const Color _kGreen = Color(0xFF2FA85C);
+const Color _kBg = Color(0xFFEDF4FF);
+const Color _kViewsBar = Color(0xFFD3DCFA);
+const Color _kEngageBar = Color(0xFFE8BEE3);
 
 class BrandAnalyticsScreen extends StatefulWidget {
   const BrandAnalyticsScreen({super.key});
@@ -20,7 +21,7 @@ class BrandAnalyticsScreen extends StatefulWidget {
 
 class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
   int _selectedTab = 0;
-  static const _tabs = ['Daily', 'Weekly', 'Monthly', 'Annually'];
+  static const _tabs = ['Weekly', 'Monthly', 'Annually'];
 
   Map<String, dynamic>? _data;
   bool _loading = true;
@@ -52,10 +53,7 @@ class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
           'role': 'brand',
           'status': 'in_progress',
         });
-        return {
-          'summary': summary,
-          'offers': offers,
-        };
+        return {'summary': summary, 'offers': offers};
       });
       if (!mounted) return;
       setState(() {
@@ -76,9 +74,7 @@ class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
 
   List<double> _viewsSeries() {
     final series = (_data?['series'] as List?) ?? const [];
-    if (series.isEmpty) {
-      return const [60, 45, 80, 55, 95, 70, 85];
-    }
+    if (series.isEmpty) return const [110, 80, 130, 90, 150, 120, 135];
     return series
         .map<double>((e) => (e is Map ? (e['views'] ?? 0) : 0).toDouble())
         .toList();
@@ -86,61 +82,16 @@ class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
 
   List<double> _engagementSeries() {
     final series = (_data?['series'] as List?) ?? const [];
-    if (series.isEmpty) {
-      return const [35, 25, 50, 20, 58, 40, 48];
-    }
+    if (series.isEmpty) return const [60, 40, 70, 30, 100, 85, 75];
     return series
         .map<double>((e) => (e is Map ? (e['engagement'] ?? 0) : 0).toDouble())
         .toList();
   }
 
-  BarChartData _buildBarChartData() {
-    final views = _viewsSeries();
-    final engagement = _engagementSeries();
-    final n = views.length;
-    return BarChartData(
-      alignment: BarChartAlignment.spaceAround,
-      maxY: 100,
-      barTouchData: BarTouchData(enabled: false),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: (double value, TitleMeta meta) {
-              const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-              if (value >= 0 && value < days.length) {
-                return SideTitleWidget(
-                  axisSide: meta.axisSide,
-                  space: 10,
-                  child: Text(days[value.toInt()], style: const TextStyle(color: kTextSubtle, fontSize: 10)),
-                );
-              }
-              return const Text('');
-            },
-          ),
-        ),
-        leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-      ),
-      gridData: const FlGridData(show: false),
-      borderData: FlBorderData(show: false),
-      barGroups: List.generate(n, (i) {
-        return BarChartGroupData(
-          x: i,
-          barRods: [
-            BarChartRodData(toY: views[i], color: kKonektaBlue, width: 8, borderRadius: BorderRadius.circular(4)),
-            BarChartRodData(toY: engagement[i], color: kKonektaPurple, width: 8, borderRadius: BorderRadius.circular(4)),
-          ],
-        );
-      }),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _kBg,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _load,
@@ -151,23 +102,40 @@ class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildHeader(context),
-                const SizedBox(height: 20),
-                if (_loading)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 60),
-                    child: Center(child: CircularProgressIndicator()),
-                  )
-                else if (_error != null)
-                  _ErrorState(message: _error!, onRetry: _load)
-                else ...[
-                  _buildTabs(),
-                  const SizedBox(height: 20),
-                  _buildDailyPerformanceCard(),
-                  const SizedBox(height: 20),
-                  _buildGrowthSection(),
-                  const SizedBox(height: 20),
-                  _buildRecentEarningsSection(),
-                ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Performance',
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: _kTextDark),
+                      ),
+                      const SizedBox(height: 6),
+                      const Text(
+                        'Daily metrics and growth analysis for your all Campaigns',
+                        style: TextStyle(fontSize: 14, color: _kTextSubtle, height: 1.3),
+                      ),
+                      const SizedBox(height: 20),
+                      _buildTabFilter(),
+                      const SizedBox(height: 20),
+                      if (_loading)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 60),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      else if (_error != null)
+                        _ErrorState(message: _error!, onRetry: _load)
+                      else ...[
+                        _buildDailyPerformanceCard(),
+                        const SizedBox(height: 24),
+                        _buildGrowthSection(),
+                        const SizedBox(height: 24),
+                        _buildRecentSpendingSection(),
+                      ],
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -183,258 +151,343 @@ class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Konekta',
-            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          const Text('Konekta',
+              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
           GestureDetector(
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const NotificationsScreen()),
             ),
-            child: const Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Icon(Icons.notifications_none, color: Colors.white, size: 26),
-              ],
-            ),
+            child: const Icon(Icons.notifications_none, color: Colors.white, size: 26),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTabs() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Performance', style: TextStyle(color: kTextDark, fontSize: 28, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 5),
-          const Text('Daily metrics and growth analysis for your campaigns', style: TextStyle(color: kTextSubtle, fontSize: 14)),
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              children: List.generate(_tabs.length, (i) {
-                final selected = _selectedTab == i;
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => _selectedTab = i),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: selected ? kKonektaBlue : Colors.transparent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        _tabs[i],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: selected ? Colors.white : kTextSubtle,
-                          fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                          fontSize: 14,
-                        ),
-                      ),
+  Widget _buildTabFilter() {
+    return Container(
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE2ECFA),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: List.generate(_tabs.length, (i) {
+          final selected = _selectedTab == i;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _selectedTab = i),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: selected ? Colors.white : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: selected
+                      ? [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))]
+                      : null,
+                ),
+                child: Center(
+                  child: Text(
+                    _tabs[i],
+                    style: TextStyle(
+                      color: selected ? _kBlue : _kTextSubtle,
+                      fontWeight: selected ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
-                );
-              }),
+                ),
+              ),
             ),
-          ),
-        ],
+          );
+        }),
       ),
     );
   }
 
   Widget _buildDailyPerformanceCard() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Card(
+    final views = _viewsSeries();
+    final engagement = _engagementSeries();
+    final maxVal = [...views, ...engagement].reduce((a, b) => a > b ? a : b);
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
         color: Colors.white,
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Text('ACTIVITY LOG',
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: _kBlue, letterSpacing: 0.5)),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Daily\nPerformance', style: TextStyle(color: kTextDark, fontSize: 22, fontWeight: FontWeight.bold, height: 1.1)),
-                  Row(
-                    children: [
-                      _buildLegendItem('Views', kKonektaBlue),
-                      const SizedBox(width: 15),
-                      _buildLegendItem('Engagement', kKonektaPurple),
-                    ],
-                  ),
+                  _buildLegendDot(_kViewsBar, 'Views'),
+                  const SizedBox(width: 12),
+                  _buildLegendDot(_kEngageBar, 'Engagement'),
                 ],
               ),
-              const SizedBox(height: 30),
-              SizedBox(height: 200, child: BarChart(_buildBarChartData())),
             ],
           ),
-        ),
+          const SizedBox(height: 8),
+          const Text('Daily\nPerformance',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: _kTextDark, height: 1.1)),
+          const SizedBox(height: 30),
+          SizedBox(
+            height: 170,
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY: maxVal * 1.15,
+                barTouchData: BarTouchData(enabled: false),
+                titlesData: FlTitlesData(
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (v, meta) {
+                        const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+                        if (v.toInt() < days.length) {
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            space: 8,
+                            child: Text(days[v.toInt()],
+                                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: _kTextSubtle)),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ),
+                  leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                ),
+                gridData: const FlGridData(show: false),
+                borderData: FlBorderData(show: false),
+                barGroups: List.generate(views.length, (i) {
+                  return BarChartGroupData(
+                    x: i,
+                    barRods: [
+                      BarChartRodData(
+                          toY: views[i],
+                          color: _kViewsBar,
+                          width: 14,
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4), topRight: Radius.circular(4))),
+                      BarChartRodData(
+                          toY: engagement[i],
+                          color: _kEngageBar,
+                          width: 14,
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4), topRight: Radius.circular(4))),
+                    ],
+                  );
+                }),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildLegendItem(String text, Color color) {
+  Widget _buildLegendDot(Color color, String label) {
     return Row(
       children: [
-        Container(width: 12, height: 12, color: color),
-        const SizedBox(width: 5),
-        Text(text, style: const TextStyle(color: kTextSubtle, fontSize: 12)),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3)),
+        ),
+        const SizedBox(width: 6),
+        Text(label, style: const TextStyle(fontSize: 11, color: _kTextSubtle)),
       ],
     );
   }
 
   Widget _buildGrowthSection() {
     final stats = (_data?['stats'] as Map?)?.cast<String, dynamic>() ?? const {};
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('GROWTH (7D)', style: TextStyle(color: kTextSubtle, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
-          const SizedBox(height: 15),
-          Column(
+    final metrics = [
+      ('NEW FOLLOWERS', '+${stats['new_followers'] ?? '1.2k'}'),
+      ('ENGAGEMENT RATE', '${stats['engagement_rate'] ?? '8.2'}%'),
+      ('TOTAL LIKES', '${stats['total_likes'] ?? '45k'}'),
+      ('TOTAL COMMENTS', '${stats['total_comments'] ?? '1.2k'}'),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Growth (7D)',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _kTextDark)),
+        const SizedBox(height: 16),
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 1.5,
+          children: metrics
+              .map((m) => _MetricCard(title: m.$1, value: m.$2))
+              .toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRecentSpendingSection() {
+    final campaigns = (_data?['recent_campaigns'] as List?) ?? const [];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Recent Spending',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _kTextDark)),
+        const SizedBox(height: 16),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
             children: [
-              Row(
-                children: [
-                  Expanded(child: _buildGrowthStatCard('NEW FOLLOWERS', '+${stats['new_followers'] ?? 0}', kKonektaBlue)),
-                  const SizedBox(width: 8),
-                  Expanded(child: _buildGrowthStatCard('ENGAGEMENT RATE', '${stats['engagement_rate'] ?? 0}%', kKonektaBlue)),
-                ],
+              // Header
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFEBE6E6),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                ),
+                child: const Row(
+                  children: [
+                    Expanded(flex: 3, child: Text('DESCRIPTION', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF6E6E6E)))),
+                    Expanded(flex: 2, child: Text('DATE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF6E6E6E)))),
+                    Expanded(
+                      flex: 2,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text('AMOUNT', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF6E6E6E))),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(child: _buildGrowthStatCard('TOTAL LIKES', '${stats['total_likes'] ?? 0}', kKonektaBlue)),
-                  const SizedBox(width: 8),
-                  Expanded(child: _buildGrowthStatCard('TOTAL COMMENTS', '${stats['total_comments'] ?? 0}', kKonektaBlue)),
-                ],
+              if (campaigns.isEmpty) ...[
+                _TransactionRow(title: 'Summer Tech Series', ref: '#TXN-90281', date: 'Oct\n24, 2023', amount: '+Rp125.000', isLast: false),
+                _TransactionRow(title: 'Summer Tech Series', ref: '#TXN-90282', date: 'Oct\n24, 2023', amount: '+Rp123.000', isLast: false),
+                _TransactionRow(title: 'Summer Tech Series', ref: '#TXN-90283', date: 'Oct\n24, 2023', amount: '+Rp99.000', isLast: true),
+              ] else
+                ...List.generate(campaigns.length, (i) {
+                  final c = (campaigns[i] as Map).cast<String, dynamic>();
+                  return _TransactionRow(
+                    title: (c['title'] ?? 'Untitled').toString(),
+                    ref: '#TXN-${c['id'] ?? i}',
+                    date: (c['created_at'] ?? '-').toString(),
+                    amount: '+Rp${c['amount'] ?? '0'}',
+                    isLast: i == campaigns.length - 1,
+                  );
+                }),
+              // Show All button
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFECEFFB),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                ),
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
+                  child: const Text(
+                    'SHOW ALL TRANSACTIONS',
+                    style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF5A5385),
+                        letterSpacing: 0.5),
+                  ),
+                ),
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGrowthStatCard(String title, String value, Color valueColor) {
-    return Card(
-      color: Colors.white,
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: const TextStyle(color: kTextSubtle, fontSize: 11, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text(value, style: TextStyle(color: valueColor, fontSize: 24, fontWeight: FontWeight.bold)),
-          ],
         ),
-      ),
+      ],
     );
   }
+}
 
-  Widget _buildRecentEarningsSection() {
-    final campaigns = (_data?['recent_campaigns'] as List?) ?? const [];
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+class _MetricCard extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const _MetricCard({required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('RECENT CAMPAIGNS', style: TextStyle(color: kTextSubtle, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
-          const SizedBox(height: 15),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 5, spreadRadius: 1)],
-            ),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFF2F2F2),
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-                  ),
-                  child: const Row(
-                    children: [
-                      Expanded(flex: 3, child: Text('DESCRIPTION', style: TextStyle(color: kTextSubtle, fontSize: 11, fontWeight: FontWeight.bold))),
-                      Expanded(flex: 2, child: Text('DATE', textAlign: TextAlign.center, style: TextStyle(color: kTextSubtle, fontSize: 11, fontWeight: FontWeight.bold))),
-                      Expanded(flex: 2, child: Text('STATUS', textAlign: TextAlign.right, style: TextStyle(color: kTextSubtle, fontSize: 11, fontWeight: FontWeight.bold))),
-                    ],
-                  ),
-                ),
-                if (campaigns.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Text('No campaigns yet', style: TextStyle(color: kTextSubtle, fontSize: 12)),
-                  )
-                else
-                  ...List.generate(campaigns.length, (i) {
-                    final c = (campaigns[i] as Map).cast<String, dynamic>();
-                    final title = (c['title'] ?? 'Untitled').toString();
-                    final ref = c['id']?.toString() ?? '-';
-                    final date = (c['created_at'] ?? '').toString();
-                    final status = (c['status'] ?? 'pending').toString();
-                    final hasBorder = i < campaigns.length - 1;
-                    final color = _statusColor(status);
-                    return _buildCampaignRow(title, ref, date, status.toUpperCase(), hasBorder, color);
-                  }),
-              ],
-            ),
-          ),
+          Text(title,
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: _kTextSubtle, letterSpacing: 0.3)),
+          const SizedBox(height: 8),
+          Text(value,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: _kBlue)),
         ],
       ),
     );
   }
+}
 
-  Color _statusColor(String s) {
-    switch (s) {
-      case 'active':
-      case 'in_progress':
-        return kKonektaBlue;
-      case 'completed':
-      case 'complete':
-        return kPositiveGreen;
-      default:
-        return kNegativeRed;
-    }
-  }
+class _TransactionRow extends StatelessWidget {
+  final String title;
+  final String ref;
+  final String date;
+  final String amount;
+  final bool isLast;
 
-  Widget _buildCampaignRow(String title, String ref, String date, String status, bool hasBorder, Color statusColor) {
+  const _TransactionRow({
+    required this.title,
+    required this.ref,
+    required this.date,
+    required this.amount,
+    required this.isLast,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        border: hasBorder ? const Border(bottom: BorderSide(color: Color(0xFFEEEEEE))) : null,
+        border: isLast ? null : const Border(bottom: BorderSide(color: Color(0xFFF0F0F0))),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             flex: 3,
             child: Row(
               children: [
-                const Icon(Icons.campaign_outlined, color: kKonektaBlue, size: 24),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFD9E7FF), borderRadius: BorderRadius.circular(50)),
+                  child: const Icon(Icons.campaign, color: Color(0xFF4285F4), size: 20),
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(color: kTextDark, fontSize: 12, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
-                      Text('Ref: $ref', style: const TextStyle(color: kTextSubtle, fontSize: 10)),
+                      Text(title,
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: _kTextDark),
+                          overflow: TextOverflow.ellipsis),
+                      Text('Ref: $ref', style: const TextStyle(fontSize: 10, color: Color(0xFF9E9E9E))),
                     ],
                   ),
                 ),
@@ -443,11 +496,15 @@ class _BrandAnalyticsScreenState extends State<BrandAnalyticsScreen> {
           ),
           Expanded(
             flex: 2,
-            child: Text(date, textAlign: TextAlign.center, style: const TextStyle(color: kTextSubtle, fontSize: 11)),
+            child: Text(date, style: const TextStyle(fontSize: 12, color: _kTextSubtle, height: 1.2)),
           ),
           Expanded(
             flex: 2,
-            child: Text(status, textAlign: TextAlign.right, style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold)),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(amount,
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: _kGreen)),
+            ),
           ),
         ],
       ),
@@ -459,15 +516,16 @@ class _ErrorState extends StatelessWidget {
   const _ErrorState({required this.message, required this.onRetry});
   final String message;
   final VoidCallback onRetry;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       child: Column(
         children: [
-          const Icon(Icons.cloud_off, color: kKonektaBlue, size: 48),
+          const Icon(Icons.cloud_off, color: _kBlue, size: 48),
           const SizedBox(height: 12),
-          Text(message, textAlign: TextAlign.center, style: const TextStyle(color: kTextSubtle)),
+          Text(message, textAlign: TextAlign.center, style: const TextStyle(color: _kTextSubtle)),
           const SizedBox(height: 16),
           ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
         ],
