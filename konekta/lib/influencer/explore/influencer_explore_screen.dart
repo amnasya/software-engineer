@@ -78,176 +78,176 @@ class _InfluencerExploreScreenState extends State<InfluencerExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final topPad = MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: const Color(0xFFEDF4FC),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(bottom: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ClipPath(
-                clipper: HeaderCurvedClipper(),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF2FA2EE), Color(0xFF3B7CE5)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.hub_outlined, color: Colors.white, size: 22),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Konekta',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const NotificationsScreen()),
-                        ),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        icon: const Icon(Icons.notifications_none_rounded, color: Colors.white, size: 24),
-                      ),
-                    ],
-                  ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // ── Header ──────────────────────────────────────────
+          Container(
+            padding: EdgeInsets.fromLTRB(16, topPad + 16, 16, 24),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF2FA2EE), Color(0xFF3B7CE5)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(28),
+                bottomRight: Radius.circular(28),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.hub_outlined, color: Colors.white, size: 22),
+                const SizedBox(width: 8),
+                const Text(
+                  'Konekta',
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 24),
-                child: _ProBannerCard(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            Icon(Icons.search_rounded, color: Colors.grey.shade400, size: 20),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: TextField(
-                                controller: _searchCtrl,
-                                onChanged: (v) => setState(() => _search = v.trim()),
-                                decoration: InputDecoration(
-                                  hintText: 'Search campaigns or brands',
-                                  hintStyle: TextStyle(color: Colors.grey.shade300, fontSize: 14),
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                              ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  icon: const Icon(Icons.notifications_none_rounded, color: Colors.white, size: 24),
+                ),
+              ],
+            ),
+          ),
+          // ── Scrollable body ──────────────────────────────────
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Pro banner
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16, 16, 16, 24),
+                    child: _ProBannerCard(),
+                  ),
+                  // Search bar
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
                             ),
-                            if (_search.isNotEmpty)
-                              GestureDetector(
-                                onTap: () {
-                                  _searchCtrl.clear();
-                                  setState(() => _search = '');
-                                },
-                                child: Icon(Icons.close_rounded, color: Colors.grey.shade400, size: 18),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Container(
-                      height: 50,
-                      width: 76,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF4A9FFF), Color(0xFF3581E1)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: TextButton(
-                        onPressed: () => setState(() {}),
-                        child: const Text(
-                          'Search',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              children: [
+                                Icon(Icons.search_rounded, color: Colors.grey.shade400, size: 20),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchCtrl,
+                                    onChanged: (v) => setState(() => _search = v.trim()),
+                                    decoration: InputDecoration(
+                                      hintText: 'Search campaigns or brands',
+                                      hintStyle: TextStyle(color: Colors.grey.shade300, fontSize: 14),
+                                      border: InputBorder.none,
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                    ),
+                                  ),
+                                ),
+                                if (_search.isNotEmpty)
+                                  GestureDetector(
+                                    onTap: () {
+                                      _searchCtrl.clear();
+                                      setState(() => _search = '');
+                                    },
+                                    child: Icon(Icons.close_rounded, color: Colors.grey.shade400, size: 18),
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                        const SizedBox(width: 12),
+                        Container(
+                          height: 50,
+                          width: 76,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF4A9FFF), Color(0xFF3581E1)],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: TextButton(
+                            onPressed: () => setState(() {}),
+                            child: const Text(
+                              'Search',
+                              style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'FEATURED PUBLIC CAMPAIGNS',
-                      style: TextStyle(
-                        color: KonektaColors.textMuted,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    Text(
-                      '${_filtered.length} OPEN',
-                      style: const TextStyle(
-                        color: KonektaColors.primary,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-              if (_loading)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 48),
-                  child: Center(child: CircularProgressIndicator(color: Color(0xFF2FA2EE))),
-                )
-              else if (_error != null)
-                _ErrorBlock(message: _error!, onRetry: _load)
-              else if (_filtered.isEmpty)
-                _EmptyBlock(query: _search)
-              else
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: List.generate(_filtered.length, (index) {
-                      final campaign = _filtered[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 14),
-                        child: _buildPublicCampaignCard(context, campaign),
-                      );
-                    }),
                   ),
-                ),
-            ],
+                  const SizedBox(height: 24),
+                  // Section label
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'FEATURED PUBLIC CAMPAIGNS',
+                          style: TextStyle(
+                            color: KonektaColors.textMuted,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        Text(
+                          '${_filtered.length} OPEN',
+                          style: const TextStyle(
+                            color: KonektaColors.primary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  // Content
+                  if (_loading)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 48),
+                      child: Center(child: CircularProgressIndicator(color: Color(0xFF2FA2EE))),
+                    )
+                  else if (_error != null)
+                    _ErrorBlock(message: _error!, onRetry: _load)
+                  else if (_filtered.isEmpty)
+                    _EmptyBlock(query: _search)
+                  else
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: _filtered.map((c) => Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: _buildPublicCampaignCard(context, c),
+                        )).toList(),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,118 +1,74 @@
 import 'package:flutter/material.dart';
+import '../../core/theme.dart';
 
-void main() {
-  runApp(const KonektaApp());
-}
-
-class KonektaApp extends StatelessWidget {
-  const KonektaApp({super.key});
+class InfluencerAnalyticsScreen extends StatelessWidget {
+  const InfluencerAnalyticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Konekta Performance',
-      theme: ThemeData(
-        fontFamily: 'Roboto',
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF3F8CFF)),
-        useMaterial3: true,
-      ),
-      home: const PerformanceScreen(),
-    );
-  }
-}
-
-class PerformanceScreen extends StatelessWidget {
-  const PerformanceScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+    final topPad = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: const Color(0xFFF3F7FA),
-      body: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            // Blue Header
-            Container(
-              height: 140,
-              padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-              decoration: const BoxDecoration(
-                color: Color(0xFF3F8CFF),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: kToolbarHeight - 20),
-                  Text(
-                    'Konekta',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Performance',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+      backgroundColor: KonektaColors.background,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Small blue pill header — "Konekta" only
+          Container(
+            padding: EdgeInsets.fromLTRB(20, topPad + 12, 20, 16),
+            decoration: const BoxDecoration(
+              gradient: KonektaColors.headerGradient,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
               ),
             ),
-
-            // Main Content Area (Scrollable)
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Subtitle
-                    const Text(
-                      'Daily metrics and growth analysis for your all Campaigns',
-                      style: TextStyle(
-                        color: Color(0xFF6B7280),
-                        fontSize: 14,
-                      ),
+            child: const Text(
+              'Konekta',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          // Main Content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title + subtitle outside header
+                  const Text(
+                    'Performance',
+                    style: TextStyle(
+                      color: KonektaColors.textPrimary,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800,
                     ),
-                    const SizedBox(height: 20),
-
-                    // Segmented Control (Weekly, Monthly, Annually)
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE5EAF2),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildSegmentItem('Weekly', isSelected: true),
-                          _buildSegmentItem('Monthly', isSelected: false),
-                          _buildSegmentItem('Annually', isSelected: false),
-                        ],
-                      ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Daily metrics and growth analysis for your all Campaigns',
+                    style: TextStyle(
+                      color: KonektaColors.textSecondary,
+                      fontSize: 14,
                     ),
-                    const SizedBox(height: 20),
+                  ),
+                  const SizedBox(height: 20),
 
-                    // Daily Performance Chart Card
-                    _buildDailyPerformanceCard(),
+                  // Segmented Control
+                  _SegmentedControl(),
+                  const SizedBox(height: 20),
+
+                    // Daily Performance Card
+                    const _DailyPerformanceCard(),
                     const SizedBox(height: 30),
 
-                    // Growth (7D) Title
                     const Text(
                       'GROWTH (7D)',
                       style: TextStyle(
-                        color: Color(0xFF374151),
+                        color: KonektaColors.textPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
@@ -120,15 +76,13 @@ class PerformanceScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    // Growth Grid
-                    _buildGrowthGrid(),
+                    const _GrowthGrid(),
                     const SizedBox(height: 30),
 
-                    // Recent Earnings Title
                     const Text(
                       'RECENT EARNINGS',
                       style: TextStyle(
-                        color: Color(0xFF374151),
+                        color: KonektaColors.textPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
@@ -136,8 +90,7 @@ class PerformanceScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
 
-                    // Earnings Table Card
-                    _buildEarningsTableCard(),
+                    const _EarningsTableCard(),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -145,35 +98,77 @@ class PerformanceScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
+}
 
-  // --- Helper Widgets ---
+// --- Segmented Control ---
 
-  Widget _buildSegmentItem(String text, {required bool isSelected}) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: isSelected ? const Color(0xFF3F8CFF) : const Color(0xFF6B7280),
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              fontSize: 15,
+class _SegmentedControl extends StatefulWidget {
+  @override
+  State<_SegmentedControl> createState() => _SegmentedControlState();
+}
+
+class _SegmentedControlState extends State<_SegmentedControl> {
+  int _selected = 0;
+  final _tabs = ['Weekly', 'Monthly', 'Annually'];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: KonektaColors.border,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: List.generate(_tabs.length, (i) {
+          final isSelected = _selected == i;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _selected = i),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.white : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    _tabs[i],
+                    style: TextStyle(
+                      color: isSelected ? KonektaColors.primary : KonektaColors.textSecondary,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
+}
 
-  Widget _buildDailyPerformanceCard() {
+// --- Daily Performance Card ---
+
+class _DailyPerformanceCard extends StatelessWidget {
+  const _DailyPerformanceCard();
+
+  static const _data = [
+    {'views': 60, 'eng': 35, 'day': 'MON'},
+    {'views': 45, 'eng': 25, 'day': 'TUE'},
+    {'views': 70, 'eng': 40, 'day': 'WED'},
+    {'views': 55, 'eng': 20, 'day': 'THU'},
+    {'views': 85, 'eng': 45, 'day': 'FRI'},
+    {'views': 65, 'eng': 30, 'day': 'SAT'},
+    {'views': 75, 'eng': 38, 'day': 'SUN'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -190,14 +185,13 @@ class PerformanceScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header Row
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'ACTIVITY LOG',
                 style: TextStyle(
-                  color: Color(0xFF6B7280),
+                  color: KonektaColors.textSecondary,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
@@ -205,33 +199,31 @@ class PerformanceScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  _buildLegendItem(Color(0xFF3F8CFF), 'Views'),
-                  SizedBox(width: 15),
-                  _buildLegendItem(Color(0xFFC48AFF), 'Engagement'),
+                  _legendItem(KonektaColors.primary, 'Views'),
+                  const SizedBox(width: 15),
+                  _legendItem(const Color(0xFFC48AFF), 'Engagement'),
                 ],
               ),
             ],
           ),
           const SizedBox(height: 10),
-          // Large Title
           const Text(
             'Daily\nPerformance',
             style: TextStyle(
-              color: Color(0xFF1F2937),
+              color: KonektaColors.textPrimary,
               fontSize: 26,
               fontWeight: FontWeight.bold,
               height: 1.1,
             ),
           ),
           const SizedBox(height: 25),
-          // Chart
           _buildBarChart(),
         ],
       ),
     );
   }
 
-  Widget _buildLegendItem(Color color, String text) {
+  Widget _legendItem(Color color, String label) {
     return Row(
       children: [
         Container(
@@ -243,41 +235,26 @@ class PerformanceScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 6),
-        Text(
-          text,
-          style: const TextStyle(color: Color(0xFF6B7280), fontSize: 12),
-        ),
+        Text(label, style: const TextStyle(color: KonektaColors.textSecondary, fontSize: 12)),
       ],
     );
   }
 
   Widget _buildBarChart() {
-    final data = [
-      {'views': 60, 'eng': 35, 'day': 'MON'},
-      {'views': 45, 'eng': 25, 'day': 'TUE'},
-      {'views': 70, 'eng': 40, 'day': 'WED'},
-      {'views': 55, 'eng': 20, 'day': 'THU'},
-      {'views': 85, 'eng': 45, 'day': 'FRI'},
-      {'views': 65, 'eng': 30, 'day': 'SAT'},
-      {'views': 75, 'eng': 38, 'day': 'SUN'},
-    ];
-
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: data.map((item) {
-            double viewsHeight = (item['views'] as num).toDouble();
-            double engHeight = (item['eng'] as num).toDouble();
+          children: _data.map((item) {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
                   width: 15,
-                  height: viewsHeight,
+                  height: (item['views'] as int).toDouble(),
                   decoration: const BoxDecoration(
-                    color: Color(0xFF3F8CFF),
+                    color: KonektaColors.primary,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(3),
                       topRight: Radius.circular(3),
@@ -287,7 +264,7 @@ class PerformanceScreen extends StatelessWidget {
                 const SizedBox(width: 3),
                 Container(
                   width: 15,
-                  height: engHeight,
+                  height: (item['eng'] as int).toDouble(),
                   decoration: const BoxDecoration(
                     color: Color(0xFFC48AFF),
                     borderRadius: BorderRadius.only(
@@ -303,14 +280,14 @@ class PerformanceScreen extends StatelessWidget {
         const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: data.map((item) {
+          children: _data.map((item) {
             return SizedBox(
               width: 33,
               child: Text(
                 item['day'] as String,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Color(0xFF6B7280),
+                  color: KonektaColors.textSecondary,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -321,8 +298,15 @@ class PerformanceScreen extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildGrowthGrid() {
+// --- Growth Grid ---
+
+class _GrowthGrid extends StatelessWidget {
+  const _GrowthGrid();
+
+  @override
+  Widget build(BuildContext context) {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -330,36 +314,29 @@ class PerformanceScreen extends StatelessWidget {
       childAspectRatio: 1.6,
       mainAxisSpacing: 15,
       crossAxisSpacing: 15,
-      children: [
-        _buildGrowthCard(
-          title: 'NEW FOLLOWERS',
-          value: '+1.2k',
-          valueColor: const Color(0xFF2FA84F),
-        ),
-        _buildGrowthCard(
-          title: 'ENGAGEMENT RATE',
-          value: '8.2%',
-          valueColor: const Color(0xFF3F8CFF),
-        ),
-        _buildGrowthCard(
-          title: 'TOTAL LIKES',
-          value: '45k',
-          valueColor: const Color(0xFF3F8CFF),
-        ),
-        _buildGrowthCard(
-          title: 'TOTAL COMMENTS',
-          value: '-1.2k',
-          valueColor: const Color(0xFFDC2626),
-        ),
+      children: const [
+        _GrowthCard(title: 'NEW FOLLOWERS', value: '+1.2k', valueColor: KonektaColors.success),
+        _GrowthCard(title: 'ENGAGEMENT RATE', value: '8.2%', valueColor: KonektaColors.primary),
+        _GrowthCard(title: 'TOTAL LIKES', value: '45k', valueColor: KonektaColors.primary),
+        _GrowthCard(title: 'TOTAL COMMENTS', value: '-1.2k', valueColor: KonektaColors.danger),
       ],
     );
   }
+}
 
-  Widget _buildGrowthCard({
-    required String title,
-    required String value,
-    required Color valueColor,
-  }) {
+class _GrowthCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final Color valueColor;
+
+  const _GrowthCard({
+    required this.title,
+    required this.value,
+    required this.valueColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -373,7 +350,7 @@ class PerformanceScreen extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              color: Color(0xFF6B7280),
+              color: KonektaColors.textSecondary,
               fontSize: 11,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.3,
@@ -392,8 +369,15 @@ class PerformanceScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildEarningsTableCard() {
+// --- Earnings Table ---
+
+class _EarningsTableCard extends StatelessWidget {
+  const _EarningsTableCard();
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -401,11 +385,11 @@ class PerformanceScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Table Header
+          // Header
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: const BoxDecoration(
-              color: Color(0xFFE5EAF2),
+              color: KonektaColors.border,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -416,40 +400,29 @@ class PerformanceScreen extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Text('DESCRIPTION',
-                      style: TextStyle(
-                          color: Color(0xFF374151),
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.3)),
+                      style: TextStyle(color: KonektaColors.textPrimary, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.3)),
                 ),
                 Expanded(
                   flex: 2,
                   child: Text('DATE',
-                      style: TextStyle(
-                          color: Color(0xFF374151),
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.3)),
+                      style: TextStyle(color: KonektaColors.textPrimary, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.3)),
                 ),
                 Expanded(
                   flex: 2,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text('AMOUNT',
-                        style: TextStyle(
-                            color: Color(0xFF374151),
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.3)),
+                        style: TextStyle(color: KonektaColors.textPrimary, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.3)),
                   ),
                 ),
               ],
             ),
           ),
+
           // Rows
-          _buildEarningsRow(amount: '+Rp125.000'),
-          _buildEarningsRow(amount: '+Rp123.000'),
-          _buildEarningsRow(amount: '+Rp99.000'),
+          const _EarningsRow(amount: '+Rp125.000'),
+          const _EarningsRow(amount: '+Rp123.000'),
+          const _EarningsRow(amount: '+Rp99.000'),
 
           // Footer
           Container(
@@ -466,7 +439,7 @@ class PerformanceScreen extends StatelessWidget {
               child: Text(
                 'SHOW ALL TRANSACTIONS',
                 style: TextStyle(
-                  color: Color(0xFF3F8CFF),
+                  color: KonektaColors.primary,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
@@ -478,29 +451,32 @@ class PerformanceScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildEarningsRow({required String amount}) {
+class _EarningsRow extends StatelessWidget {
+  final String amount;
+  const _EarningsRow({required this.amount});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          // Description (Flex 3)
+          // Description
           Expanded(
             flex: 3,
             child: Row(
               children: [
-                // Campaign Icon
                 Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9E7FF),
+                  decoration: const BoxDecoration(
+                    color: KonektaColors.softBlue,
                     shape: BoxShape.circle,
                   ),
-                  child:
-                      const Icon(Icons.campaign, color: Color(0xFF3F8CFF), size: 20),
+                  child: const Icon(Icons.campaign, color: KonektaColors.primary, size: 20),
                 ),
                 const SizedBox(width: 12),
-                // Text Col
                 const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -508,16 +484,16 @@ class PerformanceScreen extends StatelessWidget {
                       Text(
                         'Summer\nTech Series',
                         style: TextStyle(
-                            color: Color(0xFF1F2937),
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            height: 1.2),
+                          color: KonektaColors.textPrimary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          height: 1.2,
+                        ),
                       ),
                       SizedBox(height: 2),
                       Text(
                         'Ref: #TXN-90281',
-                        style: TextStyle(
-                            color: Color(0xFF6B7280), fontSize: 10),
+                        style: TextStyle(color: KonektaColors.textSecondary, fontSize: 10),
                       ),
                     ],
                   ),
@@ -525,16 +501,15 @@ class PerformanceScreen extends StatelessWidget {
               ],
             ),
           ),
-          // Date (Flex 2)
+          // Date
           const Expanded(
             flex: 2,
             child: Text(
               'Oct\n24, 2023',
-              style: TextStyle(
-                  color: Color(0xFF6B7280), fontSize: 12, height: 1.2),
+              style: TextStyle(color: KonektaColors.textSecondary, fontSize: 12, height: 1.2),
             ),
           ),
-          // Amount (Flex 2)
+          // Amount
           Expanded(
             flex: 2,
             child: Align(
@@ -542,7 +517,7 @@ class PerformanceScreen extends StatelessWidget {
               child: Text(
                 amount,
                 style: const TextStyle(
-                  color: Color(0xFF2FA84F),
+                  color: KonektaColors.success,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
