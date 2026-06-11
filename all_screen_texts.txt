@@ -1,0 +1,646 @@
+================================================================================
+FILE 1: brand_campaign_room_screen.dart
+PATH: lib/features/brand/campaign/brand_campaign_room_screen.dart (inferred)
+================================================================================
+
+AppBar title: Konekta
+
+Section labels:
+- ACTIVE CAMPAIGN
+- Kopi susu
+
+Deadline badge: Deadline: 14 Days Left
+
+Campaign progress card:
+- Overall Campaign
+  Progress
+- 78%
+
+Metric 1:
+- Total
+  Views
+- 1.2M / 1.5M
+
+Metric 2:
+- Total
+  Likes
+- 85K / 100K
+
+Metric 3:
+- Total
+  Shares
+- 12K / 15K
+
+Influencer summary row:
+- Total Influencers
+- 15/20
+
+Action required card:
+- Action Required
+- Applicants awaiting your review.
+- Approval Applicants (3 Pending)
+
+Participating influencers section:
+- Participating
+  Influencers
+- View
+  All
+
+Influencer rows (name / progress / action):
+- beebadoobie / 90% / [Detail button]
+- Lana del rei / 100% / [Complete chip]
+- laufey / 50% / [Detail button]
+
+================================================================================
+FILE 2: brand_dashboard_screen.dart
+PATH: lib/features/brand/dashboard/brand_dashboard_screen.dart (inferred)
+================================================================================
+
+Header:
+- Konekta (logo + wordmark, hi Karina greeting follows)
+
+Salutation:
+- Hi, Karina
+- Ready to expand your reach?
+
+Main performance card:
+- THIS WEEK'S AUDIENCE REACHED
+- 1.250.400 Views
+- +12.5% from last week
+- Combined performance across all active creators.
+
+Grid stats:
+- 4.8% / AVG. ENGAGEMENT
+- 60.2K / TOTAL INTERACTIONS (7D)
+
+Create new room button: Create New Room
+
+Action need section:
+- Action Need
+- Card 1: Influencers reached targets / Review 12 successful campaigns
+- Card 2: Pending Contract Approval / 4 documents require signature
+
+Active rooms section:
+- Active Rooms
+- View All
+
+Room 1:
+- Kopi Susu
+- 5 Days Left
+- IN PROGRESS
+- 78%
+- Goal: 50,000 views and 5k engagement
+
+Room 2:
+- Aula Skincare
+- 12 Days Left
+- IN PROGRESS
+- 40%
+- Goal: 100,000 views and 10k engagement
+
+Room 3:
+- NBA
+- 1 Days Left
+- COMPLETE
+- 100%
+- Goal: 67,000 views and 6k engagement
+
+================================================================================
+FILE 3: new_campaign_screen.dart
+PATH: lib/features/brand/campaign/new_campaign_screen.dart (inferred)
+================================================================================
+
+AppBar:
+- New Campaign
+- Draft (action)
+
+Section 1: Campaign Details
+- Campaign Name
+  Hint: e.g., Summer Launch 2024
+- Deadline
+  Hint: mm/dd/yyyy
+
+Section 2: Logistics & Budget
+- Room Capacity (Influencer) / Hint: 50
+- Reward Nominal per Creator / Hint: Rp   123.000
+
+Section 3: Video Concept
+- Brief Instructions
+  Hint: Describe the aesthetic, key messaging, and any required product shots...
+
+Add Target Metric dialog:
+- Title: Add Target Metric
+- Body: Select a metric and set a target value.
+- Options (radio): Likes, Comments, Share, Views
+- Actions: Cancel / Add
+
+Add Requirement Metric dialog:
+- Title: Add Requirement Metric
+- Body: Select a requirement and set a value.
+- Options (radio): Followers, Total Completed Campaign
+- Actions: Cancel / Add
+
+Section 4: Campaign Target Metrics
+- Subtitle: Set specific numeric goals for your selected KPIs per influencer.
+- Metric row placeholder: Enter goal
+- Dashed add button: Add Target Metrics
+
+Section 5: Requirement Metrics
+- Subtitle: Set specific numeric Requirement for the influencer that applies.
+- Metric row placeholder: Enter goal
+- Dashed add button: Add requirement metrics
+
+Section 6: Campaign Visibility
+- Campaign Visibility
+- Description: Currently set to Public/Private. Anyone can discover and apply.
+
+Bottom CTA: Create Room
+
+Draft snackbar: Draft saved!
+
+================================================================================
+FILE 4: brand_view_profile_screen.dart
+PATH: lib/features/brand/profile/brand_view_profile_screen.dart (inferred)
+================================================================================
+
+AppBar: View Profile
+
+Profile header:
+- Situbondo
+- @stdbdnaonedada
+- Tags: Food, Lifestyle, Verified
+
+Audience & Reach section:
+- Card 1: Followers / 25.4K / +12% this month
+- Card 2: Avg. Views / 15.2K / Per post
+- Card 3: Engagement / 3.2% / +12% this month
+- Card 4: Campaign / 1.3k / +12% this month
+
+Recent content section:
+- Recent Content
+- View All
+- Gallery cards (horizontal): 22.1K, 18.5K, 14.9K
+
+Contact CTA: Contact
+
+================================================================================
+FILE 5: brand_influencer_progress_detail_screen.dart
+PATH: lib/features/brand/campaign/brand_influencer_progress_detail_screen.dart (inferred)
+================================================================================
+
+AppBar: Konekta
+
+Header:
+- Lana del rei
+- Campaign: Kopi susu
+
+Campaign progress card:
+- Campaign Progress
+- Goal: 50K Views, 5K Likes
+- Views: 50K / 50K (100%)
+- Likes: 5K / 5K (100%)
+- Shares: 200 / 200 (100%)
+- Status: Target Completed
+
+Payout configuration card (shown when showPayout = true):
+- Payout Configuration
+- Bank: Bank Central Asia
+- Account: ****  4432
+- Agreed Amount: Rp 167.000
+- Button: Pay Now
+
+Content submissions card:
+- Content Submissions
+- Video 1
+- Video 2
+
+================================================================================
+FILE 6: brand_chat_room_screen.dart
+PATH: lib/features/brand/chat/brand_chat_room_screen.dart (inferred)
+================================================================================
+
+AppBar:
+- Situbondo (avatar + name)
+- Active now
+
+Conversation bubbles:
+- Date stamp: Today, 10:42 AM
+- (me)    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque sem a ex sollicitudin, non imperdiet nunc condimentum.
+- (them)  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque sem a ex sollicitudin, non imperdiet nunc condimentum.
+- (me)    Okay sure here's the code to join our campaign room; 2h19CDhe901
+
+Input row:
+- (attach icon)
+- Type a message...
+- (send button)
+
+================================================================================
+FILE 7: brand_chat_list_screen.dart
+PATH: lib/features/brand/chat/brand_chat_list_screen.dart (inferred)
+================================================================================
+
+AppBar: Konekta
+Search field: Search messages...
+
+Chat list:
+- Situbondo / Thanks for the update. Let me know when... / 11:32 AM / unread: 2
+- That person / Sure, let me join your room campaign / Yesterday
+- Some nice guy / I'll do anything you ask me to / Monday
+- bebadobi / hi can i do something else.. / Thursday
+
+================================================================================
+FILE 8: brand_review_applicant_screen.dart
+PATH: lib/features/brand/approval/brand_review_applicant_screen.dart (inferred)
+================================================================================
+
+AppBar: Review Profile
+
+Profile header:
+- Situbondo
+- @stdbdnaonedada
+- Tags: Food, Lifestyle, Verified
+
+Audience & Reach section:
+- Followers / 25.4K / +12% this month
+- Avg. Views / 15.2K / Per post
+- Engagement / 3.2% / +12% this month
+- Campaign / 16 / Finished 6 Campaign this month
+
+Recent content section:
+- Recent Content
+- View All
+- Gallery cards: 22.1K, 18.5K, 14.9K
+
+Bottom action bar:
+- Reject
+- Approve
+
+================================================================================
+FILE 9: brand_approval_applicants_screen.dart
+PATH: lib/features/brand/approval/brand_approval_applicants_screen.dart (inferred)
+================================================================================
+
+AppBar: Pending Applicants
+
+Section title: Review Contracts
+
+Applicant cards (3 total, identical structure):
+- Situbondo
+- Followers: 25K / Req: 10K
+- Verified badge on first card only
+- Detail button
+
+================================================================================
+FILE 10: brand_explore_screen.dart
+PATH: lib/features/brand/explore/brand_explore_screen.dart (inferred)
+================================================================================
+
+Header: Konekta
+
+Premium tier card:
+- PREMIUM TIER
+- Konekta Pro
+- Stand out to brands & unlock
+  unlimited campaigns.
+- Upgrade
+
+Message card:
+- Messages
+- Check your latest chats
+
+Search row:
+- "Search by name or keyword" placeholder
+- (filter / tune icon button)
+
+Creator cards (4 visible, 4th has badge):
+- Someone
+- Fashion style
+- 12K Followers • 5.5% Engagement
+- VIEW PROFILE
+
+Footer:
+- SHOW MORE CREATORS
+
+================================================================================
+FILE 11: brand_analytics_screen.dart
+PATH: lib/features/brand/analytics/brand_analytics_screen.dart (inferred)
+================================================================================
+
+Header: Konekta
+
+Section: Performance
+- Subtitle: Daily metrics and growth analysis for your all Campaigns
+
+Time range tabs: Daily, Weekly, Monthly, Annually
+
+Daily performance card:
+- Daily
+  Performance
+- Legend: Views (blue), Engagement (purple)
+- Bar chart x-axis: MON, TUE, WED, THU, FRI, SAT, SUN
+
+Growth (7d) section:
+- NEW FOLLOWERS / +1.2k
+- ENGAGEMENT RATE / 8.2%
+- TOTAL LIKES / 45K
+- TOTAL COMMENTS / 1.2k
+
+Recent campaigns table:
+- DESCRIPTION / DATE / STATUS
+- Summer Tech Series / Oct 24, 2023 / COMPLETE
+- Aula Skincare Launch / Oct 24, 2023 / IN PROGRESS
+- NBA Drop Promo / Oct 24, 2023 / PENDING
+- SHOW ALL CAMPAIGNS
+
+================================================================================
+FILE 12: brand_subscription_screen.dart
+PATH: lib/features/brand/subscription/brand_subscription_screen.dart (inferred)
+================================================================================
+
+AppBar: Konekta Pro
+
+Pro upgrade badge: Pro Upgrade
+
+Hero text:
+- Scale Your
+  Brand Influence
+  with Konekta
+  Pro
+
+Subtitle:
+- Unlock unlimited campaign management, advanced creator filters, and seamless automated tracking.
+
+Features card:
+- Maximized Campaign Reach — Publish public campaigns that get pushed to the top of the influencers' explore feed.
+- High-Capacity Campaign Rooms — Manage multiple active campaigns and recruit more creators.
+- Premium Creator Directory — Access advanced filtering by niches, engagement rates, and verified creators.
+- Enterprise-Grade Analytics — Export complete campaign data into PDF and CSV reports.
+
+Pricing card:
+- Billing toggle: Monthly / Annually (with Save 25% badge)
+- BEST VALUE
+- Konekta Pro Annual / Konekta Pro Monthly
+- Rp 225.000 / month (annual) or Rp 299.000 / month (monthly)
+- Billed Rp 2.700.000 once a year. / Billed monthly, cancel anytime.
+- Includes Unlimited Rooms, Unlimited Creators, and Data Export features.
+- Button: Go Pro Annual / Go Pro Monthly
+- Secure transaction guarantee via
+  Automated Virtual Account
+
+Footer:
+- Konekta Pro
+- Privacy Policy | Terms of Service | Help Center
+- Contact Support
+- © 2024 Konekta Pro. Secure encrypted payments.
+
+Purchase dialog snackbar: Redirecting to payment...
+
+================================================================================
+FILE 13: influencer_dashboard_screen.dart
+PATH: lib/features/influencer/dashboard/influencer_dashboard_screen.dart (inferred)
+================================================================================
+
+Header: Konekta
+Greeting: Hi, {name from session}, Ready to grow today?
+
+Earnings card:
+- THIS MONTH'S EARNINGS: Rp 3.467.420
+- PENDING FROM BRANDS: Rp 1.250.000
+- Automatically transferred to your registered bank account.
+
+7-day stat cards:
+- TOTAL VIEWS (7D) / 24.8K
+- ENGAGEMENT (7D) / 2.3K
+
+Active campaigns section:
+- Brand A - Summer Launch / Active / Rp 2.500.000 / Deadline: June 15, 2026 / 65%
+- TechCo Product Review / Pending / Rp 1.800.000 / Deadline: June 20, 2026 / 0%
+- Hardcoded card text: Kopi Susu / 5 Days Left / IN PROGRESS / Target 75% / Goal: 50,000 views and 5k engagement
+
+================================================================================
+FILE 14: influencer_explore_screen.dart
+PATH: lib/features/influencer/explore/influencer_explore_screen.dart (inferred)
+================================================================================
+
+Header: Konekta
+
+Pro banner card:
+- PREMIUM TIER
+- Konekta Pro
+- Stand out to brands & unlock unlimited campaigns.
+- Upgrade
+
+Private access section:
+- PRIVATE ACCESS
+- Enter Room Code (input)
+- Join (button)
+
+Featured public campaigns section:
+- FEATURED PUBLIC CAMPAIGNS
+- VIEW ALL
+- Card 1: Kopi Susu / 14 Days Left / OPEN / Rp 160k - 240k / Goal: 50,000 views and 5k engagement
+- Card 2: Kebab / 5 Days Left / OPEN / Rp 160k - 240k / Goal: 50,000 views and 5k engagement
+- Card 3: Calf / 20 Days Left / OPEN / Rp 300k - 370k / Goal: 50,000 views and 5k engagement
+- Card 4: AAA Skincare / - Days Left / CLOSED / Rp 300k - 370k / Goal: 50,000 views and 5k engagement
+
+================================================================================
+FILE 15: influencer_performance_screen.dart
+PATH: lib/features/influencer/performance/influencer_performance_screen.dart (inferred)
+================================================================================
+
+Header: Konekta
+
+Section: Performance
+- Daily metrics and growth analysis for your all Campaigns
+
+Time range tabs: Daily, Weekly, Monthly, Annually
+
+Performance chart card:
+- ACTIVITY LOG
+- Daily
+  Performance
+- Legend: Views, Engagement
+- Bar chart x-axis: MON, TUE, WED, THU, FRI, SAT, SUN
+
+Growth (7d) section:
+- NEW FOLLOWERS / +1.2k
+- ENGAGEMENT RATE / 8.2%
+- TOTAL LIKES / 45k
+- TOTAL COMMENTS / +1.2k
+
+Recent earnings table:
+- DESCRIPTION / DATE / AMOUNT
+- Summer Tech Series / Ref: #TXN-90281 / Oct 24, 2023 / +Rp125.000
+- Summer Tech Series / Ref: #TXN-90281 / Oct 24, 2023 / +Rp123.000
+- Summer Tech Series / Ref: #TXN-90281 / Oct 24, 2023 / +Rp99.000
+- SHOW ALL TRANSACTIONS
+
+================================================================================
+FILE 16: create_campaign_screen.dart
+PATH: lib/features/influencer/campaign/create_campaign_screen.dart (inferred)
+================================================================================
+
+AppBar: Create Campaign
+
+Influencer card:
+- Selected Influencer
+- Sarah Creative
+
+Form fields:
+- Campaign Title / Hint: e.g. Summer Coffee Collection
+- Campaign Brief / Hint: Describe the campaign goals, deliverables, and expectations...
+- Budget (IDR) / Hint: e.g. Rp 2,400,000
+- Deadline row: Select a date
+
+Submit button: Create Campaign (becomes "Creating..." while loading)
+
+================================================================================
+FILE 17: campaign_detail_screen.dart
+PATH: lib/features/campaign/campaign_detail_screen.dart (inferred)
+================================================================================
+
+AppBar: Campaign Detail
+
+Header card:
+- Kopi Susu Official
+- Food & Beverage
+- IN PROGRESS
+
+Campaign brief:
+- Create 3 Instagram Feed posts and 2 Reels showcasing our new coffee menu collection. Content should highlight the premium quality and cozy atmosphere of Kopi Susu.
+
+Campaign details:
+- Budget: Rp 2.400.000
+- Start Date: Jun 15, 2025
+- End Date: Jul 15, 2025
+- Platform: Instagram
+- Deadline: Jul 10, 2025
+
+Progress section:
+- 67% Complete
+- 3/5 posts
+
+Action buttons:
+- View Progress
+- Contact Brand
+
+================================================================================
+FILE 18: campaign_room_screen.dart
+PATH: lib/features/campaign/campaign_room_screen.dart (inferred)
+================================================================================
+
+AppBar: Campaign Room
+
+Campaign header:
+- Kopi Susu Campaign
+- Coffee Menu Collection
+- IN PROGRESS
+- Campaign Period: Jun 15 - Jul 15, 2025
+- Budget: Rp 2,400,000
+
+Performance analytics:
+- Views & Engagement (7 Days)
+- Legend: Views, Engagements
+
+KPI summary:
+- TOTAL VIEWS: 12,847 / +12%
+- ENGAGEMENT: 1,234 / +8%
+- CONVERSION: 5.6% / +2%
+- REVENUE: Rp 2.4M / On Track
+
+Buttons:
+- View Performance
+- Open Chat
+
+================================================================================
+FILE 19: campaign_performance_screen.dart
+PATH: lib/features/campaign/campaign_performance_screen.dart (inferred)
+================================================================================
+
+AppBar: Campaign Performance
+
+Campaign card:
+- Summer Iced Latte Launch
+- Kopi Susu Co.
+- IN PROGRESS
+- Reward per creator: Rp 150.000
+- Campaign Period: Jul 1, 2025 - Jul 14, 2025
+
+Progress ring:
+- 78% / Complete
+- Timeline Progress: 65%
+- Content Delivery: 78%
+- Quality Score: 92%
+
+Performance metrics:
+- VIEWS: 39K / 50K (78%)
+- LIKES: 3.9K / 5K (78%)
+- SHARES: 156 / 200 (78%)
+
+================================================================================
+FILE 20: chat_list_screen.dart
+PATH: lib/features/chat/chat_list_screen.dart (inferred)
+================================================================================
+
+AppBar: Chats
+Search field: Search chats…
+
+Chat list:
+- Kopi Susu Official (KS) / Hey! We have a new campaign idea for your next content. / 2:30 PM / unread: 2
+- Aula Skincare (AS) / Thanks for the update! Let me review the draft. / Yesterday
+- NBA Indonesia (NB) / Campaign completed successfully! Great work. / Jun 1
+- Café Amazon (CA) / Can we schedule a call tomorrow? / May 28 / unread: 5
+- Indomaret (ID) / The campaign brief has been sent to your email. / May 25
+
+================================================================================
+FILE 21: chat_room_screen.dart
+PATH: lib/features/chat/chat_room_screen.dart (inferred)
+================================================================================
+
+AppBar:
+- Kopi Susu Official
+- Online
+- (video call icon)
+- (more icon)
+
+Seed conversation (top to bottom):
+- (out) Hi! We'd like to discuss the upcoming campaign details with you. — 10:30 AM
+- (in)  Hello! Thank you for reaching out. I'd love to hear more about the campaign. — 10:32 AM
+- (out) We're planning a coffee-themed content series for next month. Budget is flexible based on your rate card. — 10:33 AM
+- (in)  That sounds amazing! I've been following your brand for a while and would be happy to collaborate. — 10:35 AM
+- (out) Great! Let me send over the brief document for your review. — 10:36 AM
+- File attachment: Campaign_Brief_KopiSusu_Q3.pdf — 2.4 MB
+- (in)  Got it! I'll review the brief and get back to you by tomorrow with my proposal. — 10:40 AM
+
+Input row:
+- (attach icon)
+- Type a message...
+- (send button)
+
+Auto-reply on send (2s delay, outgoing):
+- Thanks for the update! I'll review everything and get back to you soon.
+
+================================================================================
+FILE 22: notifications_screen.dart
+PATH: lib/features/notification/notifications_screen.dart (inferred)
+================================================================================
+
+AppBar: Notifications
+
+Header:
+- Recent Update
+- You have 2 unread notifications.
+- Mark all as read
+
+Notifications (unread first):
+- Campaign Target Success — Just now — Congratulations! You accomplished the target for...
+- New Message from Malboro — 2h ago — "Hey! We loved your recent post. We'd like to discuss a potential...
+
+Section divider: YESTERDAY
+- Payment Processed — Yesterday — Your payout of Rp125.000 for the 'Tech Review' campaign has been
+- Profile Verification Complete — Yesterday — Your identity has been verified. You now have full access to apply
+
+Section divider: LAST WEEK
+- Application Accepted — Oct 12 — ViewSonic has accepted your contract to join campaign...
+
+Footer: You're all caught up!
